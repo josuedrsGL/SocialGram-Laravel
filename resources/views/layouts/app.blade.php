@@ -15,8 +15,8 @@
                     SocialGram
                 </h1>
                 <nav class="flex gap-2 items-center">
-                    <a href="#" class="font-bold uppercase text-gray-600 text-sm">Login</a>
-                    <a href="/sign-up" class="font-bold uppercase text-gray-600 text-sm">Sign Up</a>
+                    <a href="{{route('login')}}" class="font-bold uppercase text-gray-600 text-sm">Login</a>
+                    <a href="{{ route('register') }}" class="font-bold uppercase text-gray-600 text-sm">Sign Up</a>
                 </nav>
             </div>
         </header>
@@ -27,8 +27,8 @@
         </main>
 
         <footer class="text-center p-5 text-gray-500 font-bold">
-            SocialGram - Todos los derechos reservados
+            SocialGram - Todos los derechos reservados {{now()->year}} 
         </footer>
-        {{now()->year}} 
+        
     </body>
 </html>
