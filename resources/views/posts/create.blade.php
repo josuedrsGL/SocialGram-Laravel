@@ -21,14 +21,14 @@
       </form>
     </div>
     <div class="md:w-1/2 bg-white p-6 shadow-xl rounded-lg">
-      <form action="{{ route('register') }}" method="POST" novalidate>
+      <form action="{{ route('posts.store') }}" method="POST" novalidate>
         @csrf {{-- Cross site request --}}
           <div class="mb-5">
             <label for="title" class="mb-2 block uppercase text-gray-500 font-bold">
               Title
             </label>
             <input 
-              id="title" type="text" placeholder="Title of publishment" 
+              id="title" type="text" placeholder="Title of publishment" name="title"
               class="border p-3 w-full rounded-lg @error('title') border-red-500 @enderror"
               value="{{old('title')}}"
             >
@@ -38,7 +38,7 @@
           </div>
           <div class="mb-5">
             <label for="description" class="mb-2 block uppercase text-gray-500 font-bold">
-              Name
+              Description
             </label>
             <textarea 
               id="description"
@@ -48,6 +48,12 @@
               {{old('description')}}
             </textarea>
             @error('description')
+              <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center"> {{$message}}</p>
+            @enderror
+          </div>
+          <div class="mb-5">
+            <input name="image" type="hidden" value="{{ old('image') }}">
+            @error('image')
               <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center"> {{$message}}</p>
             @enderror
           </div>
