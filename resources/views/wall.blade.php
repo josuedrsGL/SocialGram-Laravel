@@ -8,7 +8,7 @@
 <div class="flex justify-center">
   <div class="w-full md:w-8/12 lg:w-6/12 flex flex-col items-center md:flex-row">
     <div class="sm:w-2/6 md:w-8/12 lg:w-6/12 px-5">
-      <img src="{{asset("img/user.png")}}" alt="user image">
+      <img src="{{ $user->image ? asset("profiles") . '/' . $user->image : asset('img/user.png')}}" alt="user image">
     </div>
     <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center md:items-start md:py-10 py-10">
       <div class="flex  items-center gap-2">
@@ -26,20 +26,45 @@
         @endauth
       </div>
       <p class="text-gray-800 text-sm mb-3 font-bold">
-        0
-        <span class="font-normal"> Followers</span>
+        {{ $user->followers()->count()}}
+        <span class="font-normal"> @choice('Follower|Followers', $user->followers()->count())</span>
       </p>
 
       <p class="text-gray-800 text-sm mb-3 font-bold">
-        0
+        {{-- {{ $user->posts->count()}} --}}
+        {{ $user->followings()->count()}}
         <span class="font-normal"> Followings</span>
       </p>
 
       <p class="text-gray-800 text-sm mb-3 font-bold">
-        0
+        {{ $user->posts->count()}}
         <span class="font-normal"> Posts</span>
       </p>
-
+      @auth
+        @if (auth()->user()->id !== $user->id)
+          @if (!$user->alreadyFollower(auth()->user()))
+              
+            <form method="POST" action="{{ route('users.follow', $user) }}">
+              @csrf
+              <input 
+              type="submit"
+              class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+              value="Follow"
+              >
+            </form>
+          @else
+            <form method="POST" action="{{ route('users.unfollow', $user)}}">
+              @csrf
+              @method('DELETE')
+              <input 
+              type="submit"
+              class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+              value="Unfollow"
+              >
+            </form>
+          @endif
+        @endif
+      @endauth
     </div>
   </div>
 </div>

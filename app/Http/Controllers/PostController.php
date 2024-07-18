@@ -15,7 +15,7 @@ class PostController extends Controller
         // dd(auth()->user()); //helper to authentication
         // dd('this is my wall');
         // dd($user);
-        $posts = Post::where('user_id', $user->id)->paginate(5);
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(5);
         // dd($posts);
         return view('wall', ['user' => $user, 'posts' => $posts]);
     }
